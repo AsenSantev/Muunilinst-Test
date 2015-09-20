@@ -1,5 +1,3 @@
-// Piece.java
-//package Hw2;
 import java.awt.*;
 import java.util.*;
 
@@ -17,7 +15,6 @@ import java.util.*;
  </pre>
  
  @author	Nick Parlante
- @version	1.0, Mar 1, 2001
 */
 public final class Piece {
 /*
@@ -36,7 +33,6 @@ public final class Piece {
 	private Piece next;	// "next" rotation
 
 	static private Piece[] pieces;	// singleton array of first rotations
-
 
 	/**
 	 Defines a new piece given the Points that make up its body.
@@ -86,7 +82,6 @@ public final class Piece {
 		return(skirt);
 	}
 
-
 	/**
 	 Returns a piece that is 90 degrees counter-clockwise
 	 rotated from the receiver.
@@ -100,7 +95,6 @@ public final class Piece {
 		return next;
 	}
 
-
 	/**
 	 Returns true if two pieces are the same --
 	 their bodies contain the same points.
@@ -110,17 +104,18 @@ public final class Piece {
 	 if two rotations are effectively the same.
 	*/
 	public boolean equals(Object obj) {
-		// standard equals() technique 1
-		if (obj == this) return(true);
+		if (obj == this) {
+			return(true);
+		}
 		
-		// standard equals() technique 2
-		// (null will be false)
-		if (!(obj instanceof Piece)) return(false);
+		if (!(obj instanceof Piece)) {
+			return (false);
+		}
 		
-		
-                if (((Piece)obj).body.length != this.body.length) return false;
+                if (((Piece)obj).body.length != this.body.length) {
+					return false;
+				}
                 
-                // your code
                 Collection setA = new HashSet();
                 Collection setB = new HashSet();
                 
@@ -128,15 +123,10 @@ public final class Piece {
                     setA.add(((Piece)obj).body[i]);
                     setB.add(this.body[i]);
                 }
+
                 boolean res = setA.equals(setB);
                 return setA.equals(setB);
-                
-                
-             
 	}
-
-
-
 
 	/**
 	 Returns an array containing the first rotation of
@@ -148,10 +138,7 @@ public final class Piece {
 	 (provided code)
 	*/
 	public static Piece[] getPieces() {
-		// lazy evaluation -- create array if needed
 		if (pieces==null) {
-		
-			// use pieceRow() to compute all the rotations for each piece
 			pieces = new Piece[] {
 				pieceRow(new Piece(parsePoints("0 0	0 1	0 2	0 3"))),	// 0
 				pieceRow(new Piece(parsePoints("0 0	0 1	0 2	1 0"))),	// 1
@@ -165,7 +152,6 @@ public final class Piece {
 		
 		return(pieces);
 	}
-
 
 	/**
 	 Given a string of x,y pairs ("0 0	0 1	0 2	1 0"), parses
@@ -194,7 +180,6 @@ public final class Piece {
 		return(array);
 	}
 
-
 	/**
 	 Given the "first" rotation of a piece piece, computes all
 	 the other rotations and links them all together
@@ -205,26 +190,25 @@ public final class Piece {
 	 to the first piece.
 	*/
 	private static Piece pieceRow(Piece root) {
-            Piece temp = root;
-            Piece prev = root;
-            for(;;) {
-                prev = temp;
-                prev.setPieceDims();
-                prev.setPieceSkirt();
-                temp = new Piece(prev.body);
-                temp = temp.rotatePiece();
-                if(!temp.equals(root)) {             
-                    prev.next = temp;
-                }
-                else
-                {
-                    prev.next = root;
-                    break;
-                }
-            } 
-            
-            
-            return root;
+		Piece temp = root;
+		Piece prev = root;
+
+		for(;;) {
+			prev = temp;
+			prev.setPieceDims();
+			prev.setPieceSkirt();
+			temp = new Piece(prev.body);
+			temp = temp.rotatePiece();
+
+			if(!temp.equals(root)) {
+				prev.next = temp;
+			} else {
+				prev.next = root;
+				break;
+			}
+		}
+
+		return root;
 	}
         
         private Piece rotatePiece() {
@@ -236,6 +220,7 @@ public final class Piece {
                 temp[i].x = body[i].y;
                 temp[i].y = body[i].x;
             }
+
             piece = new Piece(temp);
             piece.setPieceDims();
             
@@ -243,43 +228,43 @@ public final class Piece {
                 temp[i].x = (piece.width-1) - piece.body[i].x;
                 temp[i].y = piece.body[i].y;
             }
+
             piece = new Piece(temp);
             return(piece);
         }
 
         private void setPieceDims() {
-            int wmax = -1;
-            int hmax = -1;
+            int maxWidth = -1;
+            int maxHeight = -1;
             for(int i = 0; i < body.length; i++){
-                if(body[i].x > wmax) wmax = body[i].x;
-                if(body[i].y > hmax) hmax = body[i].y;
+                if(body[i].x > maxWidth) maxWidth = body[i].x;
+                if(body[i].y > maxHeight) maxHeight = body[i].y;
             }
-            width = wmax+1;
-            height = hmax+1; 
+
+            width = maxWidth+1;
+            height = maxHeight+1;
         }
         
         private void setPieceSkirt() {
-            int wmax = width;
-            int hmax;
+            int maxWidth = width;
+            int maxHeight;
             
-            skirt = new int[wmax];
+            skirt = new int[maxWidth];
             
-            for(int i = 0; i < wmax; i++) {
-                Point temp = null;
-                hmax = 10000;
+            for(int i = 0; i < maxWidth; i++) {
+                Point currentPoint = null;
+                maxHeight = 10000;
+
                 for(int j = 0; j < body.length; j++) {
                     if(body[j].x == i) {
-                        if(body[j].y < hmax) {
-                            hmax = body[j].y;
-                            temp = body[j];
+                        if(body[j].y < maxHeight) {
+                            maxHeight = body[j].y;
+                            currentPoint = body[j];
                         }
                     }
                 }
-                skirt[i] = temp.y;
-                
+
+                skirt[i] = currentPoint.y;
             }
-            
         }
-
-
 }

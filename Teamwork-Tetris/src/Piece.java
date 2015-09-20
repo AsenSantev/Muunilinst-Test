@@ -4,8 +4,7 @@ import java.util.*;
 /**
  An immutable representation of a tetris piece in a particular rotation.
  Each piece is defined by the blocks that make up its body.
- See the Tetris-Architecture.html for an overview.
- 
+
  Typical client looks like...
  <pre>
  Piece[] pieces = Piece.getPieces();	// the array of base pieces
@@ -19,12 +18,10 @@ import java.util.*;
 public final class Piece {
 /*
  Implementation notes:
- -The starter code specs out a few simple things, but leaves
- the key algorithms for you.
+ -The starter code specs out a few simple things, but leaves  the key algorithms for you.
  -Store the body as a Point[] array
  -The ivars in the Point class are .x and .y
- -Do not assume there are 4 points in the body -- use array.length
- to keep the code general
+ -Do not assume there are 4 points in the body -- use array.length to keep the code general
 */
 	private Point[] body;
 	private int[] skirt;
@@ -38,9 +35,6 @@ public final class Piece {
 	 Defines a new piece given the Points that make up its body.
 	 Makes its own copy of the array and the Points inside it.
 	 Does not set up the rotations.
-	 
-	 This constructor is PRIVATE -- if a client
-	 wants a piece object, they must use Piece.getPieces().
 	*/
 	private Piece(Point[] points) {
             body = new Point[points.length];
@@ -76,32 +70,27 @@ public final class Piece {
 	 Returns a pointer to the piece's skirt. For each x value
 	 across the piece, the skirt gives the lowest y value in the body.
 	 This useful for computing where the piece will land.
-	 The caller should not modify this array.
 	*/
 	public int[] getSkirt() {
 		return(skirt);
 	}
 
 	/**
-	 Returns a piece that is 90 degrees counter-clockwise
-	 rotated from the receiver.
+	 Returns a piece that is 90 degrees counter-clockwise rotated from the receiver.
 	 
 	 <p>Implementation:
 	 The Piece class pre-computes all the rotations once.
-	 This method just hops from one pre-computed rotation
-	 to the next in constant time.
+	 This method just hops from one pre-computed rotation to the next in constant time.
 	*/	
 	public Piece nextRotation() {
 		return next;
 	}
 
 	/**
-	 Returns true if two pieces are the same --
-	 their bodies contain the same points.
-	 Interestingly, this is not the same as having exactly the
-	 same body arrays, since the points may not be
-	 in the same order in the bodies. Used internally to detect
-	 if two rotations are effectively the same.
+	 Returns true if two pieces are the same -- their bodies contain the same points.
+	 Interestingly, this is not the same as having exactly the same body arrays, since the points may not be
+	 in the same order in the bodies.
+	 Used internally to detect if two rotations are effectively the same.
 	*/
 	public boolean equals(Object obj) {
 		if (obj == this) {
@@ -129,13 +118,8 @@ public final class Piece {
 	}
 
 	/**
-	 Returns an array containing the first rotation of
-	 each of the 7 standard tetris pieces.
-	 The next (counterclockwise) rotation can be obtained
-	 from each piece with the {@link #nextRotation()} message.
-	 In this way, the client can iterate through all the rotations
-	 until eventually getting back to the first rotation.
-	 (provided code)
+	 Returns an array containing the first rotation of each of the 7 standard tetris pieces.
+	 The next (counterclockwise) rotation can be obtained from each piece with the {@link #nextRotation()} message.
 	*/
 	public static Piece[] getPieces() {
 		if (pieces==null) {
@@ -154,9 +138,7 @@ public final class Piece {
 	}
 
 	/**
-	 Given a string of x,y pairs ("0 0	0 1	0 2	1 0"), parses
-	 the points into a Point[] array.
-	 (Provided code)
+	 Given a string of x,y pairs ("0 0	0 1	0 2	1 0"), parses the points into a Point[] array.
 	*/
 	private static Point[] parsePoints(String string) {
 	    // could use Arraylist here, but use vector so works on Java 1.1
@@ -181,13 +163,10 @@ public final class Piece {
 	}
 
 	/**
-	 Given the "first" rotation of a piece piece, computes all
-	 the other rotations and links them all together
+	 Given the "first" rotation of a piece piece, computes all the other rotations and links them all together
 	 by their next pointers. Returns the first piece.
-	 {@link nextRotation()} relies on the next pointers to get from
-	 one rotation to the next. Internally, uses Piece.equals()
-	 to detect when the rotations have gotten us back
-	 to the first piece.
+	 {@link nextRotation()} relies on the next pointers to get from one rotation to the next.
+	 Internally, uses Piece.equals() to detect when the rotations have gotten us back to the first piece.
 	*/
 	private static Piece pieceRow(Piece root) {
 		Piece temp = root;

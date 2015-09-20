@@ -1,17 +1,10 @@
 import java.awt.*;
 
 /**
- * Represents a Tetris board -- essentially a 2-d grid
- * of booleans. Supports tetris pieces and row clearing.
+ * Represents a Tetris board in the form of a 2-d grid of booleans. Supports tetris pieces and row clearing.
  * Has an "undo" feature that allows clients to add and remove pieces efficiently.
- * Does not do any drawing or have any idea of pixels. Instead,
- * just represents the abstract 2-d board.
- * See Tetris-Architecture.html for an overview.
- * <p>
- * This is the starter file version -- a few simple things are filled in already
- *
+ * Does not do any drawing or have any idea of pixels. Instead, just represents the abstract 2-d board.
  * @author Nick Parlante
- * @version 1.0, Mar 1, 2001
  */
 
 public final class Board {
@@ -29,8 +22,7 @@ public final class Board {
     private boolean committed;
 
     /**
-     * Creates an empty board of the given width and height
-     * measured in blocks.
+     * Creates an empty board of the given width and height  measured in blocks.
      */
     public Board(int aWidth, int aHeight) {
         width = aWidth;
@@ -62,8 +54,7 @@ public final class Board {
     }
 
     /**
-     * Returns the max column height present in the board.
-     * For an empty board this is 0.
+     * Returns the max column height present in the board. For an empty board this is 0.
      */
     public int getMaxHeight() {
         int max = 0;
@@ -74,13 +65,9 @@ public final class Board {
     }
 
     /**
-     * Given a piece and an x, returns the y
-     * value where the piece would come to rest
+     * Given a piece and an x, returns the y value where the piece would come to rest
      * if it were dropped straight down at that x.
-     * <p>
-     * <p>
-     * Implementation: use the skirt and the col heights
-     * to compute this fast -- O(skirt length).
+     * Implementation: use the skirt and the col heights to compute this fast -- O (skirt length).
      */
     public int dropHeight(Piece piece, int x) {
         int high = 10000;
@@ -101,8 +88,7 @@ public final class Board {
     }
 
     /**
-     * Returns the height of the given column --
-     * i.e. the y value of the highest block + 1.
+     * Returns the height of the given column -- i.e. the y value of the highest block + 1.
      * The height is 0 if the column contains no blocks.
      */
     public int getColumnHeight(int x) {
@@ -110,8 +96,7 @@ public final class Board {
     }
 
     /**
-     * Returns the number of filled blocks in
-     * the given row.
+     * Returns the number of filled blocks in the given row.
      */
     public int getRowWidth(int y) {
         return widths[y];
@@ -119,8 +104,7 @@ public final class Board {
 
     /**
      * Returns true if the given block is filled in the board.
-     * Blocks outside of the valid width/height area
-     * always return true.
+     * Blocks outside of the valid width/height area always return true.
      */
     public final boolean getGrid(int x, int y) {
         if (x < 0 || x > width) {
@@ -142,12 +126,10 @@ public final class Board {
     /**
      * Attempts to add the body of a piece to the board.
      * Copies the piece blocks into the board grid.
-     * Returns PLACE_OK for a regular placement, or PLACE_ROW_FILLED
-     * for a regular placement that causes at least one row to be filled.
-     * <p>
-     * <p>Error cases:
-     * If part of the piece would fall out of bounds, the placement
-     * does not change the board at all, and PLACE_OUT_BOUNDS is returned.
+     * Returns PLACE_OK for a regular placement, or PLACE_ROW_FILLED for a regular placement that causes at least one row to be filled.
+     *
+     * Error cases:
+     * If part of the piece would fall out of bounds, the placement does not change the board at all, and PLACE_OUT_BOUNDS is returned.
      * If the placement is "bad" --interfering with existing blocks in the grid --
      * then the placement is halted partially complete and PLACE_BAD is returned.
      * An undo() will remove the bad placement.
@@ -207,12 +189,9 @@ public final class Board {
     }
 
     /**
-     * Deletes rows that are filled all the way across, moving
-     * things above down. Returns true if any row clearing happened.
-     * <p>
-     * <p>Implementation: This is complicated.
-     * Ideally, you want to copy each row down
-     * to its correct location in one pass.
+     * Deletes rows that are filled all the way across, moving things above down. Returns true if any row clearing happened.
+     * Implementation:
+     * Ideally, you want to copy each row down to its correct location in one pass.
      * Note that more than one row may be filled.
      */
     public boolean clearRows() {
@@ -265,11 +244,9 @@ public final class Board {
     }
 
     /**
-     * If a place() happens, optionally followed by a clearRows(),
-     * a subsequent undo() reverts the board to its state before
-     * the place(). If the conditions for undo() are not met, such as
-     * calling undo() twice in a row, then the second undo() does nothing.
-     * See the overview docs.
+     * If a place() happens, optionally followed by a clearRows(), a subsequent undo() reverts the board to its state before
+     * the place(). If the conditions for undo() are not met, such as calling undo() twice in a row,
+     * then the second undo() does nothing.
      */
     public void undo() {
         if (!committed) {
@@ -303,7 +280,6 @@ public final class Board {
 
     /**
      * Puts the board in the committed state.
-     * See the overview docs.
      */
     public void commit() {
         if (!committed) {

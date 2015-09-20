@@ -5,12 +5,9 @@ import java.awt.event.*;
 import javax.swing.event.*;
 
 /**
- * JTetris presents a tetris game in a window.
+ * This is a tetris game in a window.
  * It handles the GUI and the animation.
- * The Piece and Board classes handle the
- * lower-level computations.
- * This code is provided in finished form for the students.
- * See Tetris-Architecture.html for an overview.
+ * The Piece and Board classes handle the lower-level computations.
  *
  * @author Nick Parlante
  */
@@ -440,17 +437,10 @@ public class JTetris extends JComponent {
     }
 	
 	/*
-	 Pixel helpers.
-	 These centralize the translation of (x,y) coords
-	 that refer to blocks in the board to (x,y) coords that
-	 count pixels. Centralizing these computations here
-	 is the only prayer that repaintPiece() and paintComponent()
-	 will be consistent.
-	 
-	 The +1's and -2's are to account for the 1 pixel
-	 rect around the perimeter.
+	 These centralize the translation of (x,y) coords that refer to blocks in the board to (x,y) coords that count pixels.
+	 Centralizing these computations here is the only prayer that repaintPiece() and paintComponent() will be consistent.
+	 The +1's and -2's are to account for the 1 pixel rect around the perimeter.
 	*/
-
 
     // width in pixels of a block
     private final float dX() {
@@ -473,9 +463,8 @@ public class JTetris extends JComponent {
     }
 
     /**
-     * Draws the current board with a 1 pixel border
-     * around the whole thing. Uses the pixel helpers
-     * above to map board coords to pixel coords.
+     * Draws the current board with a 1 pixel border around the whole thing.
+     * Uses the pixel helpers above to map board coords to pixel coords.
      * Draws rows that are filled all the way across in green.
      */
     public void paintComponent(Graphics g) {
@@ -529,8 +518,7 @@ public class JTetris extends JComponent {
     }
 
     /**
-     * Updates the timer to reflect the current setting of the
-     * speed slider.
+     * Updates the timer to reflect the current setting of the speed slider.
      */
     public void updateTimer() {
         double value = ((double) speed.getValue()) / speed.getMaximum();
@@ -539,9 +527,6 @@ public class JTetris extends JComponent {
 
     /**
      * Creates the panel of UI controls.
-     * This code is very repetitive -- the GUI/XML
-     * extensions in Java 1.4 should make this sort
-     * of ugly code less necessary.
      */
     public Container createControlPanel() {
         Container panel = Box.createVerticalBox();
@@ -601,10 +586,7 @@ public class JTetris extends JComponent {
     }
 
     /**
-     * Creates a Window,
-     * installs the JTetris,
-     * checks the testMode state,
-     * install the controls in the WEST.
+     * Creates a Window, installs the JTetris, install the controls in the WEST.
      */
     public static void main(String[] args)
     {

@@ -1,5 +1,10 @@
+package game;
+
 import java.awt.*;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 /**
  An immutable representation of a tetris piece in a particular rotation.
